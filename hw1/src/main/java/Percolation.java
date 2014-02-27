@@ -25,32 +25,32 @@ public class Percolation {
 	    if ( i < 1 || j < 1 || i > baseDim || j > baseDim )
                 throw new IndexOutOfBoundsException();
 	    
-        return i-1*baseDim+j-1;
+        return (i-1)*baseDim+j-1;
 	}
 	 // open site (row i, column j) if it is not already
 	public void open(int i, int j){
 		int index = index(i,j);
-		if ( i == 0 ) {
+		if ( i == 1 ) {
 			uf.union(top, index);
 			ufg.union(top, index);
 		}
 		
-		this.grid[i][j] = true;
+		this.grid[i-1][j-1] = true;
 		for (int x = -1; x <=1 ; x+=2) {
-			if ( i + x >= 0 && i + x < baseDim && isOpen(i+x, j) ){
+			if ( i + x >= 1 && i + x <= baseDim && isOpen(i+x, j) ){
 				uf.union(index, index(i+x,j));
 				ufg.union(index, index(i+x,j));
 			}
 		}
 		
 		for (int y = -1; y <= 1; y+=2) {
-			if ( j + y < baseDim && j + y >= 0 && isOpen(i, j+y) ) {
+			if ( j + y <= baseDim && j + y >= 1 && isOpen(i, j+y) ) {
 				uf.union(index, index(i,j+y));
 				ufg.union(index, index(i,j+y));
 			}
 		}
 		
-		if ( i == baseDim - 1 ) 
+		if ( i == baseDim ) 
 			uf.union( index, bottom);
 	};  
 	 // is site (row i, column j) open?
