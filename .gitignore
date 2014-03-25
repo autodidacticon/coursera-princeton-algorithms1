@@ -1,4 +1,6 @@
 .classpath
+.swp
+target/
 .project
 .settings
 .DS_Store
